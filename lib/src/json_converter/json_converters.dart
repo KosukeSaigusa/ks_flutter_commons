@@ -1,6 +1,5 @@
 /// 参考：
 /// https://github.com/mono0926/flutter_firestore_ref
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:ks_flutter_commons/ks_flutter_commons.dart';
@@ -13,6 +12,37 @@ class PassthroughConverter<T> implements JsonConverter<T, Object?> {
 
   @override
   Object? toJson(T object) => object;
+}
+
+class DocumentReferenceConverter implements JsonConverter<DocumentReference, DocumentReference> {
+  const DocumentReferenceConverter();
+
+  @override
+  DocumentReference fromJson(DocumentReference reference) => reference;
+
+  @override
+  DocumentReference toJson(DocumentReference reference) => reference;
+}
+
+class NullableDocumentReferenceConverter
+    implements JsonConverter<DocumentReference?, DocumentReference?> {
+  const NullableDocumentReferenceConverter();
+
+  @override
+  DocumentReference? fromJson(DocumentReference? reference) => reference;
+
+  @override
+  DocumentReference? toJson(DocumentReference? reference) => reference;
+}
+
+class GeoPointConverter implements JsonConverter<GeoPoint, GeoPoint> {
+  const GeoPointConverter();
+
+  @override
+  GeoPoint fromJson(GeoPoint geoPoint) => geoPoint;
+
+  @override
+  GeoPoint toJson(GeoPoint geoPoint) => geoPoint;
 }
 
 /// Firestore ドキュメントには FieldValue.serverTimestamp() を、
@@ -100,20 +130,20 @@ class DefaultFalseConverter implements JsonConverter<bool?, dynamic> {
 
 /// デフォルト false で Firestore に書き込む bool 型のためのコンバータ。
 class DefaultIntConverter implements JsonConverter<int?, dynamic> {
-  const DefaultIntConverter({this.defalutValue = 3});
+  const DefaultIntConverter({this.defaultValue = 3});
 
-  final int defalutValue;
+  final int defaultValue;
 
   @override
   int? fromJson(dynamic json) {
     if (json is int) {
       return json;
     }
-    return defalutValue;
+    return defaultValue;
   }
 
   /// toJson、つまり、書き込みのためにインスタンスを生成してドキュメント化する時は
   /// 指定がなければ defaultValue にする。
   @override
-  int toJson(int? object) => object ?? defalutValue;
+  int toJson(int? object) => object ?? defaultValue;
 }
