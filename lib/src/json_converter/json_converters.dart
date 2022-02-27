@@ -39,10 +39,10 @@ class GeoPointConverter implements JsonConverter<GeoPoint, GeoPoint> {
   const GeoPointConverter();
 
   @override
-  GeoPoint fromJson(GeoPoint geoPoint) => geoPoint;
+  GeoPoint fromJson(GeoPoint geopoint) => geopoint;
 
   @override
-  GeoPoint toJson(GeoPoint geoPoint) => geoPoint;
+  GeoPoint toJson(GeoPoint geopoint) => geopoint;
 }
 
 /// Firestore ドキュメントには FieldValue.serverTimestamp() を、
