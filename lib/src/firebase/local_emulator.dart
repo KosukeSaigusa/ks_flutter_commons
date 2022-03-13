@@ -12,6 +12,7 @@ Future<void> setUpLocalEmulator({
   int functionsPortNumber = 5001,
   int authPortNumber = 9099,
   int storagePortNumber = 9199,
+  String region = 'asia-northeast1',
   String bucket = 'default-bucket',
   bool firestoreSSLEnabled = false,
   bool firestorePersistenceEnabled = true,
@@ -25,7 +26,8 @@ Future<void> setUpLocalEmulator({
     persistenceEnabled: firestorePersistenceEnabled,
   );
   FirebaseFirestore.instance.useFirestoreEmulator(localhost, firestorePortNumber);
-  FirebaseFunctions.instance.useFunctionsEmulator(localhost, functionsPortNumber);
+  FirebaseFunctions.instanceFor(region: region)
+      .useFunctionsEmulator(localhost, functionsPortNumber);
   FirebaseStorage.instanceFor(bucket: bucket);
   await Future.wait<void>(
     [
