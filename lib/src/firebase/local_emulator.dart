@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,14 +20,14 @@ Future<void> setUpLocalEmulator({
   print('Running with Firebase Local Emulator Suite');
   print('-------------------------------------------');
   FirebaseFirestore.instance.settings = Settings(
-    host: '$localhost:$firestorePortNumber',
+    host: Platform.isAndroid ? '10.0.2.2:$firestorePortNumber' : '$localhost:$firestorePortNumber',
     sslEnabled: firestoreSSLEnabled,
     persistenceEnabled: firestorePersistenceEnabled,
   );
   FirebaseFirestore.instance.useFirestoreEmulator(localhost, firestorePortNumber);
   FirebaseFunctions.instance.useFunctionsEmulator(localhost, functionsPortNumber);
   FirebaseStorage.instanceFor(bucket: bucket);
-  await Future.wait(
+  await Future.wait<void>(
     [
       FirebaseAuth.instance.useAuthEmulator(localhost, authPortNumber),
       FirebaseStorage.instance.useStorageEmulator(localhost, storagePortNumber),
