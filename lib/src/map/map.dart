@@ -6,7 +6,7 @@ Map<String, dynamic> removeNullValueMapEntries(Map<String, dynamic> m) {
   final nonNullValueMap = <String, dynamic>{};
   m.forEach((key, dynamic value) {
     if (value != null) {
-      nonNullValueMap.update(key, (dynamic value) => value);
+      nonNullValueMap[key] = value;
     }
   });
   return nonNullValueMap;
@@ -21,7 +21,9 @@ Map<String, dynamic> processMapToUpdateFirestoreDoc(
 ]) {
   final nonNullValueMap = <String, dynamic>{};
   m.forEach((key, dynamic value) {
-    nonNullValueMap[key] = value;
+    if (value != null) {
+      nonNullValueMap[key] = value;
+    }
   });
   nonNullValueMap[updateAtFieldName] = FieldValue.serverTimestamp();
   return nonNullValueMap;
