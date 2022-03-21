@@ -9,7 +9,7 @@ const defaultPlaceHolderColor = Colors.black26;
 class CircleImage extends StatelessWidget {
   const CircleImage({
     Key? key,
-    required this.radius,
+    required this.size,
     required this.imageURL,
     this.placeHolderColor = defaultPlaceHolderColor,
     this.showBorder = false,
@@ -17,7 +17,7 @@ class CircleImage extends StatelessWidget {
     this.borderWidth = 0,
   }) : super(key: key);
 
-  final double radius;
+  final double size;
   final String? imageURL;
   final Color placeHolderColor;
   final bool showBorder;
@@ -27,13 +27,13 @@ class CircleImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if ((imageURL ?? '').isEmpty) {
-      return circlePlaceHolder(radius: radius);
+      return circlePlaceHolder(size: size);
     }
     return CachedNetworkImage(
       imageUrl: imageURL!,
       imageBuilder: (context, imageProvider) => Container(
-        width: radius,
-        height: radius,
+        width: size,
+        height: size,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           image: DecorationImage(
@@ -48,19 +48,19 @@ class CircleImage extends StatelessWidget {
               : null,
         ),
       ),
-      placeholder: (context, url) => circlePlaceHolder(radius: radius, color: placeHolderColor),
+      placeholder: (context, url) => circlePlaceHolder(size: size, color: placeHolderColor),
       errorWidget: (context, url, dynamic error) =>
-          circlePlaceHolder(radius: radius, color: placeHolderColor),
+          circlePlaceHolder(size: size, color: placeHolderColor),
     );
   }
 
   static Widget circlePlaceHolder({
-    required double radius,
+    required double size,
     Color color = defaultPlaceHolderColor,
   }) {
     return Container(
-      width: radius,
-      height: radius,
+      width: size,
+      height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: color,
