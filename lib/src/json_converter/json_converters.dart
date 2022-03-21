@@ -14,25 +14,26 @@ class PassthroughConverter<T> implements JsonConverter<T, Object?> {
   Object? toJson(T object) => object;
 }
 
-class DocumentReferenceConverter implements JsonConverter<DocumentReference, DocumentReference> {
+class DocumentReferenceConverter<T>
+    implements JsonConverter<DocumentReference<T>, DocumentReference<Object?>> {
   const DocumentReferenceConverter();
 
   @override
-  DocumentReference fromJson(DocumentReference reference) => reference;
+  DocumentReference<T> fromJson(DocumentReference<Object?> ref) => ref as DocumentReference<T>;
 
   @override
-  DocumentReference toJson(DocumentReference reference) => reference;
+  DocumentReference<Object?> toJson(DocumentReference<T> ref) => ref;
 }
 
-class NullableDocumentReferenceConverter
-    implements JsonConverter<DocumentReference?, DocumentReference?> {
+class NullableDocumentReferenceConverter<T>
+    implements JsonConverter<DocumentReference<T>?, DocumentReference<Object?>?> {
   const NullableDocumentReferenceConverter();
 
   @override
-  DocumentReference? fromJson(DocumentReference? reference) => reference;
+  DocumentReference<T>? fromJson(DocumentReference<Object?>? ref) => ref as DocumentReference<T>?;
 
   @override
-  DocumentReference? toJson(DocumentReference? reference) => reference;
+  DocumentReference? toJson(DocumentReference<T>? ref) => ref;
 }
 
 class GeoPointConverter implements JsonConverter<GeoPoint, GeoPoint> {
