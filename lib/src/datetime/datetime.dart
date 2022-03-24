@@ -29,10 +29,14 @@ bool sameDay(DateTime a, DateTime b) => a.difference(b).inDays == 0 && a.day == 
 /// - それより前なら yyyy-MM-dd の日付を
 ///
 /// 返す
-String dateTimeString({
-  required DateTime dateTime,
+String humanReadableDateTimeString(
+  DateTime? dateTime, [
   int daysDiffLimit = 7,
-}) {
+  String placeHolder = '',
+]) {
+  if (dateTime == null) {
+    return placeHolder;
+  }
   final now = DateTime.now();
   if (sameDay(dateTime, now)) {
     return DateFormat('HH:mm').format(dateTime);
@@ -64,9 +68,13 @@ String dateTimeString({
 ///
 /// 返す
 String dateString({
-  required DateTime dateTime,
+  required DateTime? dateTime,
   int daysDiffLimit = 7,
+  String placeHolder = '',
 }) {
+  if (dateTime == null) {
+    return placeHolder;
+  }
   final now = DateTime.now();
   final year = dateTime.year;
   final month = dateTime.month;
