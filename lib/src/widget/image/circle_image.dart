@@ -27,7 +27,7 @@ class CircleImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if ((imageURL ?? '').isEmpty) {
-      return circlePlaceHolder(size: size);
+      return CirclePlaceHolder(size: size, placeHolderColor: placeHolderColor);
     }
     return CachedNetworkImage(
       imageUrl: imageURL!,
@@ -48,22 +48,31 @@ class CircleImage extends StatelessWidget {
               : null,
         ),
       ),
-      placeholder: (context, url) => circlePlaceHolder(size: size, color: placeHolderColor),
+      placeholder: (context, url) =>
+          CirclePlaceHolder(size: size, placeHolderColor: placeHolderColor),
       errorWidget: (context, url, dynamic error) =>
-          circlePlaceHolder(size: size, color: placeHolderColor),
+          CirclePlaceHolder(size: size, placeHolderColor: placeHolderColor),
     );
   }
+}
 
-  static Widget circlePlaceHolder({
-    required double size,
-    Color color = defaultPlaceHolderColor,
-  }) {
+class CirclePlaceHolder extends StatelessWidget {
+  const CirclePlaceHolder({
+    required this.size,
+    this.placeHolderColor = defaultPlaceHolderColor,
+  });
+
+  final double size;
+  final Color placeHolderColor;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: color,
+        color: placeHolderColor,
       ),
     );
   }
