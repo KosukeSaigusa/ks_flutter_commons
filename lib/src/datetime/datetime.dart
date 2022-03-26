@@ -103,7 +103,7 @@ String dateString({
 }
 
 /// yyyy-MM-dd (曜) の形式の文字列を返す
-String toIsoStringWithWeekDay({DateTime? dateTime, String placeHolder = ''}) {
+String toIsoStringWithWeekDay(DateTime? dateTime, [String placeHolder = '']) {
   if (dateTime == null) {
     return placeHolder;
   }
