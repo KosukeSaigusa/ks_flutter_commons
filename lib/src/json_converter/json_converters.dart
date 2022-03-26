@@ -102,6 +102,47 @@ class AutoDateTimeIso8601StringConverter implements JsonConverter<String?, Strin
   String toJson(String? object) => object ?? DateTime.now().toIso8601String();
 }
 
+/// Firestore では Map<String, FieldValue.serverTimestamp()> として扱うフィールドを、
+/// Dart のインスタンスとしては Map<String DateTime> で使用するためのコンバータ。
+class AutoTimestampValueMapConverter implements JsonConverter<Map<String, DateTime?>, dynamic> {
+  const AutoTimestampValueMapConverter();
+
+  @override
+  Map<String, DateTime?> fromJson(dynamic json) {
+    final m = <String, DateTime>{};
+    if (json is Map) {
+      for (final key in json.keys) {
+        if (key is String) {
+          try {
+            m[key] = (json[key] as Timestamp).toDate();
+          } on Exception {
+            // return m;
+            m[key] = DateTime.now();
+          }
+        }
+      }
+    }
+    return m;
+  }
+
+  /// toJson、つまり、書き込みのためにインスタンスを生成してドキュメント化する時は
+  /// Map のバリューは FieldValue.serverTimestamp() に自動で置換する。
+  @override
+  dynamic toJson(Map<String, DateTime?> object) {
+    final m = <String, dynamic>{};
+    for (final key in object.keys) {
+      try {
+        final value = object[key];
+        m[key] = value == null ? FieldValue.serverTimestamp() : Timestamp.fromDate(value);
+      } on Exception {
+        return m;
+      }
+    }
+
+    return m;
+  }
+}
+
 /// エポック秒で int の値を与えるコンバータ
 /// 後から追加すると数が大きくなる表示順序などのフィールド (e.g. order) などに使用する
 class AutoSecondsSinceEpochConverter implements JsonConverter<int?, int> {
