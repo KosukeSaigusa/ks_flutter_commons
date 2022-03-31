@@ -103,7 +103,7 @@ String dateString({
 }
 
 /// yyyy-MM-dd (曜) の形式の文字列を返す
-String toIsoStringWithWeekDay(DateTime? dateTime, [String placeHolder = '']) {
+String toIsoStringDateWithWeekDay(DateTime? dateTime, [String placeHolder = '']) {
   if (dateTime == null) {
     return placeHolder;
   }
@@ -112,6 +112,6 @@ String toIsoStringWithWeekDay(DateTime? dateTime, [String placeHolder = '']) {
 }
 
 /// 24 時間制の時刻だけを返す
-String timeString(DateTime? dateTime) {
+String to24HourNotationString(DateTime? dateTime) {
   return dateTime == null ? '' : '${DateFormat.Hm().format(dateTime)}';
 }
