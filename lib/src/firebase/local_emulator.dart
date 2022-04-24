@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 
 /// Firebase Emulator Suite に接続するための設定を行う。
 Future<void> setUpLocalEmulator({
@@ -17,9 +18,9 @@ Future<void> setUpLocalEmulator({
   bool firestoreSSLEnabled = false,
   bool firestorePersistenceEnabled = true,
 }) async {
-  print('-------------------------------------------');
-  print('Running with Firebase Local Emulator Suite');
-  print('-------------------------------------------');
+  debugPrint('-------------------------------------------');
+  debugPrint('Running with Firebase Local Emulator Suite');
+  debugPrint('-------------------------------------------');
   FirebaseFirestore.instance.settings = Settings(
     host: Platform.isAndroid ? '10.0.2.2:$firestorePortNumber' : '$localhost:$firestorePortNumber',
     sslEnabled: firestoreSSLEnabled,
